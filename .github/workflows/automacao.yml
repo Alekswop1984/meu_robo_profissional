@@ -1,0 +1,22 @@
+name: Execucao de area do robo
+on:
+  schedule:
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  executar:
+    runs-on: ubuntu-latest
+
+    steps:
+     name: clonar repositorio
+     uses: actions/checkout@v3
+
+     -name: Commit do relatorio 
+       run: |
+          git conf user.name "github-actions[bot]"
+          git add dados/relatorio.csv
+          git commit -m "Atualizacao do relatorio"
+          git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
